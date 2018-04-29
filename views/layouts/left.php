@@ -30,6 +30,9 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
+                    ['label' => 'Menu', 'options' => ['class' => 'header']],
+                    ['label' => 'Items', 'url' => ['/item']],
+                    ['label' => 'Categories', 'url' => ['/category']],
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
