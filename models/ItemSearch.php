@@ -12,6 +12,8 @@ use app\models\Item;
  */
 class ItemSearch extends Item
 {
+    public $category;
+
     /**
      * @inheritdoc
      */
@@ -19,7 +21,7 @@ class ItemSearch extends Item
     {
         return [
             [['item_id', 'category_id'], 'integer'],
-            [['name', 'description'], 'safe'],
+            [['name', 'description', 'category'], 'safe'],
         ];
     }
 
@@ -42,15 +44,18 @@ class ItemSearch extends Item
     public function search($params)
     {
         $query = Item::find();
-
+        $query->joinWith('category');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,        ]);
+        
+        $dataProvider->sort->attributes['category'] = [
+            'asc' => ['category.name' => SORT_ASC],
+            'desc' => ['category.name' => SORT_DESC],
+        ];
 
-        $this->load($params);
-
-        if (!$this->validate()) {
+        if (!($this->load($params) && $this->validate())) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
@@ -62,9 +67,11 @@ class ItemSearch extends Item
             'category_id' => $this->category_id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'item.name', $this->name])
+            ->andFilterWhere(['like', 'category.name', $this->category])
+            ->andFilterWhere(['like', 'item.description', $this->description]);
 
+        
         return $dataProvider;
     }
 }
