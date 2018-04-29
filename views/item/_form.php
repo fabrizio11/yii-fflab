@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-        <?= $form->field($model, 'category_id')->textInput() ?>
+        <?= $form->field($model, 'category_id')->dropDownList(\app\models\Category::getCategoryList()) ?>
 
     </div>
     <div class="box-footer">

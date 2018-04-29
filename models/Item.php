@@ -47,7 +47,7 @@ class Item extends \yii\db\ActiveRecord
             'item_id' => 'Item ID',
             'name' => 'Name',
             'description' => 'Description',
-            'category_id' => 'Category ID',
+            'category_id' => 'Category',
         ];
     }
 
